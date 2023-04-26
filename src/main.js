@@ -1,13 +1,12 @@
-// import InfoView from './view/info-view.js';
 import FilterView from './view/filter-view.js';
+import TripPresenter from './presenter/board-presenter.js';
 import { render } from './render.js';
-// import TripPresenter from './presenter/trip-presenter.js';
 
-const siteBodyElement = document.querySelector('.trip-main');
-const siteFilterElement = siteBodyElement.querySelector('.trip-controls__filters');
-// const tripPresenter = new TripPresenter({tripContainer: siteBodyElement});
 
-// render(new InfoView(), siteBodyElement);
-render(new FilterView(), siteFilterElement);
+const tripListFilterElement = document.querySelector('.trip-controls__filters');
+const tripListElement = document.querySelector('.trip-events');
+const tripPresenter = new TripPresenter({ tripContainer: tripListElement });
 
-// tripPresenter.init();
+render(new FilterView(), tripListFilterElement);
+
+tripPresenter.init();
