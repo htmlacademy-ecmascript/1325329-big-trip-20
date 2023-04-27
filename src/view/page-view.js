@@ -1,8 +1,9 @@
-import {createElement} from '../render.js';
+import { createElement } from '../render.js';
 
 function createPageTemplate() {
-  return (`<main class="page-body__page-main  page-main">
-  </main>`);
+  return (`
+  <ul class="trip-events__list"></ul>
+  `);
 }
 
 export default class waypointView {

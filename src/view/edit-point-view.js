@@ -1,8 +1,7 @@
 import {createElement} from '../render.js';
 
 function createNewPointTemplate() {
-  return (`<ul class="trip-events__list">
-  <li class="trip-events__item">
+  return (`
   <form class="event event--edit" action="#" method="post">
     <header class="event__header">
       <div class="event__type-wrapper">
@@ -142,10 +141,10 @@ function createNewPointTemplate() {
       </section>
     </section>
   </form>
-</li>`);
+`);
 }
 
-export default class newPointView {
+export default class editPointView {
   getTemplate() {
     return createNewPointTemplate();
   }
