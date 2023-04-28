@@ -1,16 +1,11 @@
-import createPageTemplate from '../view/page-view.js';
 import ListView from '../view/list-view.js';
-import ItemView from '../view/item-view.js';
-import editPointView from '../view/edit-point-view.js';
+import EditFormView from '../view/edit-form-view.js';
 import waypointView from '../view/waypoint-view.js';
 import { render } from '../render.js';
+import { NUMBER_OF_POINTS } from '../view/const.js';
 
-const NUMBER_OF_POINTS = 3;
-
-export default class TripPresenter {
-  pageComponent = new createPageTemplate();
-  listComponent = new ListView();
-  itemComponent = new ItemView();
+export default class BoardPresenter {
+  pageComponent = new ListView();
 
   constructor({ listContainer }) {
     this.listContainer = listContainer;
@@ -18,12 +13,10 @@ export default class TripPresenter {
 
   init() {
     render(this.pageComponent, this.listContainer);
-    render(new editPointView(), this.listComponent.getElement());
-    render(new ItemView(), this.listComponent.getElement());
-    render(this.listComponent, this.pageComponent.getElement());
+    render(new EditFormView(), this.pageComponent.getElement());
 
     for (let i = 0; i < NUMBER_OF_POINTS; i++) {
-      render(new waypointView(), this.listComponent.getElement());
+      render(new waypointView(), this.pageComponent.getElement());
     }
   }
 }
