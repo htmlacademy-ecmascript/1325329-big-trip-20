@@ -1,22 +1,26 @@
 import ListView from '../view/list-view.js';
+import NewFormView from '../view/new-form-view.js';
 import EditFormView from '../view/edit-form-view.js';
-import waypointView from '../view/waypoint-view.js';
+import WayPointView from '../view/way-point-view.js';
 import { render } from '../render.js';
-import { NUMBER_OF_POINTS } from '../view/const.js';
 
 export default class BoardPresenter {
-  pageComponent = new ListView();
+  listComponent = new ListView();
 
-  constructor({ listContainer }) {
+  constructor({ listContainer, pointsModel }) {
     this.listContainer = listContainer;
+    this.pointsModel = pointsModel;
   }
 
   init() {
-    render(this.pageComponent, this.listContainer);
-    render(new EditFormView(), this.pageComponent.getElement());
+    this.listPoints = [...this.pointsModel.getPoints()];
 
-    for (let i = 0; i < NUMBER_OF_POINTS; i++) {
-      render(new waypointView(), this.pageComponent.getElement());
+    render(this.listComponent, this.listContainer);
+    render(new NewFormView(), this.listComponent.getElement());
+    render(new EditFormView(), this.listComponent.getElement());
+
+    for (let i = 1; i < this.listPoints.length; i++) {
+      render(new WayPointView({point: this.listPoints[i]}), this.listComponent.getElement());
     }
   }
 }
