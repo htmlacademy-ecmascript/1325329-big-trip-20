@@ -3,26 +3,19 @@ import dayjs from 'dayjs';
 const DATE_FORMAT = 'MMM DD';
 const TIME_FORMAT = 'hh:mm';
 const EDIT_DATE_FORMAT = 'DD/MM/YY HH:MM';
+const DURATION_FORMAT = 'HH[H ]mm[M]';
 
-function getRandomArrayElement(items) {
-  return items[Math.floor(Math.random() * items.length)];
-}
+const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
 
-function humanizeTravelDate(dateForm) {
-  return dateForm ? dayjs(dateForm).format(DATE_FORMAT) : '';
-}
+const getRandomValue = (max) => Math.floor(Math.random() * max);
 
-function humanizeTimeFromTo(dateTo) {
-  return dateTo ? dayjs(dateTo).format(TIME_FORMAT) : '';
-}
+const humanizeTravelDate = (dateFrom) => dateFrom ? dayjs(dateFrom).format(DATE_FORMAT) : '';
 
-function humanizeTimeEdit(dateTime) {
-  return dateTime ? dayjs(dateTime).format(EDIT_DATE_FORMAT) : '';
-}
+const humanizeTimeFromTo = (dateTo) => dateTo ? dayjs(dateTo).format(TIME_FORMAT) : '';
 
-function humanizeTravelTime(from, to) {
-  return dayjs(to).diff(dayjs(from), 'h');
-}
+const humanizeTimeEdit = (dateTime) => dateTime ? dayjs(dateTime).format(EDIT_DATE_FORMAT) : '';
 
-export { getRandomArrayElement, humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit };
+const humanizeTravelTime = (dateFrom, dateTo) => dayjs(dayjs(dateFrom).diff(dateTo)).format(DURATION_FORMAT);
+
+export { getRandomArrayElement, getRandomValue, humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit };
 
