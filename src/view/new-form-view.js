@@ -1,18 +1,9 @@
 import { createElement } from '../render.js';
 import { humanizeTimeEdit } from '../utils.js';
 
-// function createNewPointItem(type, point) {
-//   return /*html*/`
-//   <div class="event__type-item">
-//   <input id="event-type-${type}-${point.id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
-//   <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-${point.id}">${type}</label>
-// </div>
-//   `;
-// }
-
 function createNewPointTemplate(point, destinations) {
   const { basePrice, dateTo, dateFrom, type } = point;
-  const pointDestination = destinations.find((dest) => point.destination === dest.id);
+  const pointDestination = destinations.find((item) => point.destination === item.id);
   const dateStart = humanizeTimeEdit(dateFrom);
   const dateEnd = humanizeTimeEdit(dateTo);
 
@@ -30,8 +21,8 @@ function createNewPointTemplate(point, destinations) {
           <fieldset class="event__type-group">
             <legend class="visually-hidden">Event type</legend>
             <div class="event__type-item">
-              <input id="event-type-${type}-${point.id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
-              <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-${point.id}">${type}</label>
+            <input id="event-type-${type}-${point.id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${type}">
+            <label class="event__type-label  event__type-label--${type}" for="event-type-${type}-${point.id}">${type}</label>
             </div>
           </fieldset>
         </div>
@@ -130,13 +121,14 @@ function createNewPointTemplate(point, destinations) {
 }
 
 export default class editPointView {
-  constructor(point, destinations) {
+  constructor(point, destinations, offers) {
     this.point = point;
     this.destinations = destinations;
+    this.offers = offers;
   }
 
   getTemplate() {
-    return createNewPointTemplate(this.point, this.destinations);
+    return createNewPointTemplate(this.point, this.destinations, this.offers);
   }
 
   getElement() {

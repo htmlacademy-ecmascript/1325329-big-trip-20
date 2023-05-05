@@ -1,9 +1,11 @@
 import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+dayjs.extend(duration);
 
 const DATE_FORMAT = 'MMM DD';
 const TIME_FORMAT = 'hh:mm';
 const EDIT_DATE_FORMAT = 'DD/MM/YY HH:MM';
-const DURATION_FORMAT = 'HH[H ]mm[M]';
+const DURATION_FORMAT = 'DD[D ] HH[H ]mm[M]';
 
 const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
 
