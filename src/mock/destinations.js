@@ -1,4 +1,3 @@
-
 export const destinations = [
   {
     'id': 1,

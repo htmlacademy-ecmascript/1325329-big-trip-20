@@ -14,7 +14,12 @@ export const offers = [
         title: 'Add luggage',
         price: getRandomValue(300)
       },
-    ],
+      {
+        id: 3,
+        title: 'Add luggage',
+        price: getRandomValue(300)
+      },
+    ]
   },
   {
     type: 'bus',
@@ -29,7 +34,7 @@ export const offers = [
         title: 'Add breakfast',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'train',
@@ -44,7 +49,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'ship',
@@ -59,7 +64,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'drive',
@@ -74,7 +79,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'flight',
@@ -89,7 +94,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'check-in',
@@ -104,7 +109,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'sightseeing',
@@ -119,7 +124,7 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
   {
     type: 'restaurant',
@@ -134,6 +139,6 @@ export const offers = [
         title: 'Switch to comfort',
         price: getRandomValue(300)
       },
-    ],
+    ]
   },
 ];

@@ -1,27 +1,27 @@
 import { createElement } from '../render.js';
 import { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime } from '../utils.js';
 
-const createOffersTemplate = (arr) => arr.map((item) =>
+const createOffersTemplate = (offerList) => offerList.map((offer) =>
   ` <li class="event__offer">
-      <span class="event__offer-title">${item.title}</span>
+      <span class="event__offer-title">${offer.title}</span>
       &plus;&euro;&nbsp;
-      <span class="event__offer-price">${item.price}</span>
+      <span class="event__offer-price">${offer.price}</span>
     </li>`).join('');
 
 function createPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, isFavorite, type, offers: offersList } = point;
   const pointDestination = destinations.find((item) => point.destination === item.id);
   const pointOffers = offers.find((item) => type === item.type);
-  const pointOffersList = pointOffers.offers.filter((item) => offersList.includes(+item.id));
+  const pointOffersList = pointOffers.offers.filter((item) => offersList.includes(Number(item.id)));
   const eventOffersList = createOffersTemplate(pointOffersList);
-
-  const dataDay = humanizeTravelDate(dateTo);
+  const dataDay = humanizeTravelDate(dateFrom);
   const dataStart = humanizeTimeFromTo(dateFrom);
   const dateEnd = humanizeTimeFromTo(dateTo);
-  const travelTime = humanizeTravelTime(dateTo, dateFrom);
+  const travelTime = humanizeTravelTime(dateFrom, dateTo);
   const favoritePoint = isFavorite ? 'event__favorite-btn--active' : 'event__favorite-btn--disabled';
 
-  return /*html*/`
+  return (
+    `
   <li class="trip-events__item">
     <div class="event">
       <time class="event__date" datetime="${dataDay}">${dataDay}</time>
@@ -56,7 +56,7 @@ function createPointTemplate(point, destinations, offers) {
       </button>
     </div>
   </li>
-`;
+`);
 }
 
 export default class PointView {
