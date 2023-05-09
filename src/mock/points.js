@@ -9,7 +9,7 @@ export const points = [
     'dateTo': '2019-07-11T11:20:50.375Z',
     'destination': 3,
     'isFavorite': false,
-    'offers': [1,2,3],
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
   {
