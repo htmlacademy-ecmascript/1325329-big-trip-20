@@ -1,4 +1,4 @@
-import { DATA_FORMAT } from './const.js';
+import { DATA_FORMAT } from '../const.js';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -32,9 +32,5 @@ const humanizeTravelTime = (dateFrom, dateTo) => {
   return pointDuration;
 };
 
-const getRandomArrayElement = (items) => items[Math.floor(Math.random() * items.length)];
-const getRandomValue = (max) => Math.floor(Math.random() * max);
-const getRandomInteger = (min, max) => Math.floor(Math.random() * (Math.floor(max) - Math.ceil(min) + 1)) + min;
-
-export { getRandomArrayElement, getRandomValue, getRandomInteger, humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit };
+export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit };
 

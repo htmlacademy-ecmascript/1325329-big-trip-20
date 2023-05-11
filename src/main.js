@@ -1,7 +1,7 @@
+import { RenderPosition, render } from './framework/render.js';
 import InfoView from './view/info-view.js';
 import FilterView from './view/filter-view.js';
 import SortView from './view/sort-view.js';
-import { RenderPosition, render } from './render.js';
 import ContentPresenter from './presenter/content-presenter.js';
 import PointsModel from './model/points-model.js';
 

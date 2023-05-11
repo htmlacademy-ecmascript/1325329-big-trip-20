@@ -1,27 +1,63 @@
+import { render, replace } from '../framework/render.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
-import NewFormView from '../view/new-form-view.js';
-// import EditFormView from '../view/edit-form-view.js';
-import { render } from '../render.js';
+import EditFormView from '../view/edit-form-view.js';
 
-export default class BoardPresenter {
-  listComponent = new ListView();
+export default class ContentPresenter {
+  #listContainer = null;
+  #pointsModel = null;
+  #listComponent = new ListView();
 
   constructor({ listContainer, pointsModel }) {
-    this.listContainer = listContainer;
-    this.pointsModel = pointsModel;
+    this.#listContainer = listContainer;
+    this.#pointsModel = pointsModel;
   }
 
   init() {
-    render(this.listComponent, this.listContainer);
-    const points = this.pointsModel.getPoints();
-    const destinations = this.pointsModel.getDestinations();
-    const offers = this.pointsModel.getOffers();
-    render(new NewFormView(points[0], destinations, offers), this.listComponent.getElement());
-    // render(new EditFormView(points[0], destinations, offers), this.listComponent.getElement());
+    const points = [...this.#pointsModel.getPoints()];
+    const destinations = this.#pointsModel.getDestinations();
+    const offers = this.#pointsModel.getOffers();
+    render(this.#listComponent, this.#listContainer);
 
-    for (const point of points) {
-      render(new PointView(point, destinations, offers), this.listComponent.getElement());
+    for (let i = 0; i < points.length; i++) {
+      this.#renderPoints(points[i], destinations, offers);
     }
+  }
+
+  #renderPoints(point, destinations, offers) {
+    const escKeyDownHandler = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        replaceEditToPoint();
+        document.removeEventListener('keydown', escKeyDownHandler);
+      }
+    };
+
+    const pointComponent = new PointView({
+      point, destinations, offers, onEditClick: () => {
+        replacePointToEdit();
+        document.addEventListener('keydown', escKeyDownHandler);
+      }
+    });
+
+    const pointEditComponent = new EditFormView({
+      point, destinations, offers, onFormSubmit: () => {
+        replaceEditToPoint();
+        document.removeEventListener('keydown', escKeyDownHandler);
+      },
+      // onRollupButtonClick: () => {
+      //   replaceEditToPoint();
+      // }
+    });
+
+    function replacePointToEdit() {
+      replace(pointEditComponent, pointComponent);
+    }
+
+    function replaceEditToPoint() {
+      replace(pointComponent, pointEditComponent);
+    }
+
+    render(pointComponent, this.#listComponent.element);
   }
 }
