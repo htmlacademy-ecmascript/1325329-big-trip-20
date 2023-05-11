@@ -45,9 +45,6 @@ export default class ContentPresenter {
         replaceEditToPoint();
         document.removeEventListener('keydown', escKeyDownHandler);
       },
-      // onRollupButtonClick: () => {
-      //   replaceEditToPoint();
-      // }
     });
 
     function replacePointToEdit() {
