@@ -72,8 +72,7 @@ export default class PointView extends AbstractView {
     this.#offers = offers;
     this.#handleEditClick = onEditClick;
 
-    this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#editClickHander);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHander);
   }
 
   get template() {

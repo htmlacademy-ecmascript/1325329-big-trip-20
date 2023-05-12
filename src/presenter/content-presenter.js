@@ -20,39 +20,41 @@ export default class ContentPresenter {
     render(this.#listComponent, this.#listContainer);
 
     for (let i = 0; i < points.length; i++) {
-      this.#renderPoints(points[i], destinations, offers);
+      this.#renderPoint(points[i], destinations, offers);
     }
   }
 
-  #renderPoints(point, destinations, offers) {
+  #renderPoint(point, destinations, offers) {
     const escKeyDownHandler = (evt) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
         replaceEditToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
       }
     };
 
     const pointComponent = new PointView({
       point, destinations, offers, onEditClick: () => {
         replacePointToEdit();
-        document.addEventListener('keydown', escKeyDownHandler);
       }
     });
 
     const pointEditComponent = new EditFormView({
       point, destinations, offers, onFormSubmit: () => {
         replaceEditToPoint();
-        document.removeEventListener('keydown', escKeyDownHandler);
       },
+      // onRollupButtonClick: () => {
+      //   replaceEditToPoint();
+      // }
     });
 
     function replacePointToEdit() {
       replace(pointEditComponent, pointComponent);
+      document.addEventListener('keydown', escKeyDownHandler);
     }
 
     function replaceEditToPoint() {
       replace(pointComponent, pointEditComponent);
+      document.removeEventListener('keydown', escKeyDownHandler);
     }
 
     render(pointComponent, this.#listComponent.element);
