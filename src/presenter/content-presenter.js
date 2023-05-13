@@ -41,10 +41,7 @@ export default class ContentPresenter {
     const pointEditComponent = new EditFormView({
       point, destinations, offers, onFormSubmit: () => {
         replaceEditToPoint();
-      },
-      // onRollupButtonClick: () => {
-      //   replaceEditToPoint();
-      // }
+      }
     });
 
     function replacePointToEdit() {
