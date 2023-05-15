@@ -2,6 +2,7 @@ import { render, replace } from '../framework/render.js';
 import ListView from '../view/list-view.js';
 import PointView from '../view/point-view.js';
 import EditFormView from '../view/edit-form-view.js';
+// import PointPresenter from './point-presenter.js';
 import NoPointView from '../view/no-point-view.js';
 
 export default class ContentPresenter {
@@ -60,16 +61,4 @@ export default class ContentPresenter {
 
     render(pointComponent, this.#listComponent.element);
   }
-
-  // #renderList() {
-  //   render(this.#listComponent.this.#listContainer);
-
-  //   if (!this.#points) {
-  //     render(new NoPointView(), this.#listComponent.element);
-  //     return;
-  //   }
-
-  //   render(new SortView(), this.#listComponent.element);
-  //   render(this.#eventsListComponent, this.#planComponent.element);
-  // }
 }
