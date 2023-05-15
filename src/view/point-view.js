@@ -43,7 +43,6 @@ function createPointTemplate(point, destinations, offers) {
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
     ${eventOffersList}
-
       </ul>
       <button class="event__favorite-btn ${favoritePoint}" type="button">
         <span class="visually-hidden">Add to favorite</span>
