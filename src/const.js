@@ -9,4 +9,11 @@ const DATA_FORMAT = {
   dataDurationMin: 'mm[M]',
 };
 
-export { TYPES, DATA_FORMAT };
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past'
+};
+
+export { TYPES, DATA_FORMAT, FilterType };
