@@ -1,4 +1,4 @@
-import { render, RenderPosition, replace } from '../framework/render.js';
+import { render, RenderPosition } from '../framework/render.js';
 import ListView from '../view/list-view.js';
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
@@ -48,7 +48,7 @@ export default class ContentPresenter {
   #handlePointChange = (updatedPoint) => {
     this.#points = updateItem(this.#points, updatedPoint);
     this.#pointPresenters.get(updatedPoint.id).init(updatedPoint);
-  }
+  };
 
   #sortPoints(sortType) {
     switch (sortType) {
@@ -84,7 +84,7 @@ export default class ContentPresenter {
 
   #renderPoint = ({ point, destinations, offers }) => {
     const pointPresenter = new PointPresenter({
-      listContainer: this.#listComponent.element,
+      pointListContainer: this.#listComponent.element,
       destinations,
       offers,
       onDataChange: this.#handlePointChange,
@@ -92,7 +92,7 @@ export default class ContentPresenter {
     });
     pointPresenter.init(point);
     this.#pointPresenters.set(point.id, pointPresenter);
-  }
+  };
 
   #renderPoints = () => {
     this.#points.forEach((point) => this.#renderPoint({
@@ -104,7 +104,7 @@ export default class ContentPresenter {
 
   #renderNoPoints = () => {
     render(this.#noPointComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
-  }
+  };
 
   #clearPoints = () => {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
@@ -114,7 +114,7 @@ export default class ContentPresenter {
   #renderPointsList = () => {
     render(this.#listComponent, this.#tripComponent.element);
     this.#renderPoints();
-  }
+  };
 
   #renderTrip() {
     render(this.#tripComponent, this.#listContainer);
