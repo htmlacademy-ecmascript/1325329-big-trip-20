@@ -14,10 +14,12 @@ function createPointTemplate(point, destinations, offers) {
   const pointOffers = offers.find((item) => type === item.type);
   const pointOffersList = pointOffers.offers.filter((item) => offersList.includes(Number(item.id)));
   const eventOffersList = createOffersTemplate(pointOffersList);
+
   const dataDay = humanizeTravelDate(dateFrom);
   const dataStart = humanizeTimeFromTo(dateFrom);
   const dateEnd = humanizeTimeFromTo(dateTo);
   const travelTime = humanizeTravelTime(dateFrom, dateTo);
+
   const favoritePoint = isFavorite ? 'event__favorite-btn--active' : 'event__favorite-btn--disabled';
 
   return (
@@ -63,23 +65,32 @@ export default class PointView extends AbstractView {
   #destinations = null;
   #offers = null;
   #handleEditClick = null;
+  #onFavoriteClick = null;
 
-  constructor({ point, destinations, offers, onEditClick }) {
+  constructor({ point, destinations, offers, onEditClick, onFavoriteClick }) {
     super();
     this.#point = point;
     this.#destinations = destinations;
     this.#offers = offers;
     this.#handleEditClick = onEditClick;
+    this.#onFavoriteClick = onFavoriteClick;
 
-    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHander);
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+    this.element.querySelector('.event__favorite-icon').addEventListener('click', this.#favoriteClickHandler);
+
   }
 
   get template() {
     return createPointTemplate(this.#point, this.#destinations, this.#offers);
   }
 
-  #editClickHander = (evt) => {
+  #editClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleEditClick();
+  };
+
+  #favoriteClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#onFavoriteClick();
   };
 }

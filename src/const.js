@@ -16,4 +16,9 @@ const FilterType = {
   PAST: 'past'
 };
 
-export { TYPES, DATA_FORMAT, FilterType };
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
+export { TYPES, DATA_FORMAT, FilterType, Mode };

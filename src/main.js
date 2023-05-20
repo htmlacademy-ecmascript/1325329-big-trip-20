@@ -1,7 +1,6 @@
 import { RenderPosition, render } from './framework/render.js';
 import InfoView from './view/info-view.js';
 import FilterView from './view/filter-view.js';
-import SortView from './view/sort-view.js';
 import ContentPresenter from './presenter/content-presenter.js';
 import PointsModel from './model/points-model.js';
 import {generateFilter} from './mock/filter.js';
@@ -16,6 +15,5 @@ const contentPresenter = new ContentPresenter({ listContainer: tripListElement, 
 
 render(new InfoView(), tripInfoElement, RenderPosition.AFTERBEGIN);
 render(new FilterView({filters}), tripListFilterElement);
-render(new SortView(), tripListElement);
 
 contentPresenter.init();

@@ -1,7 +1,7 @@
 import AbstractView from '../framework/view/abstract-view.js';
 
-function createFilterItemTemplate(filterType, isChecked) {
-  const { type, count } = filterType;
+function createFilterItemTemplate(filter, isChecked) {
+  const { type, count } = filter;
   return `<div class="trip-filters__filter" >
       <input
       id="filter-${type}"
