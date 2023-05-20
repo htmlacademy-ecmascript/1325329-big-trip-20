@@ -72,13 +72,13 @@ export default class ContentPresenter {
 
     this.#sortPoints(sortType);
     this.#clearPoints();
-    this.#renderPointsList({point});
-  }
+    this.#renderPointsList();
+  };
 
   #renderSort() {
     this.#sortComponent = new SortView({
       onSortTypeChange: this.#hadleSortTypeChange
-    })
+    });
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
   }
 
@@ -109,7 +109,7 @@ export default class ContentPresenter {
   #clearPoints = () => {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
-  }
+  };
 
   #renderPointsList = () => {
     render(this.#listComponent, this.#tripComponent.element);
@@ -125,6 +125,6 @@ export default class ContentPresenter {
     }
 
     this.#renderSort();
-    this.#renderPointsList({point});
+    this.#renderPointsList();
   }
 }

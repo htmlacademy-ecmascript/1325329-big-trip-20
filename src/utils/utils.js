@@ -58,15 +58,11 @@ const sortByDay = (pointA, pointB) => {
   if (dayjs(pointA.dateFrom).isBefore(dayjs(pointB.dateFrom))) {
     return -1;
   }
-}
+};
 
-const sortByTime = (pointA, pointB) => {
-  return dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom)) - dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
-}
+const sortByTime = (pointA, pointB) => dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom)) - dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
 
-const sortByPrice = (pointA, pointB) => {
-  return pointB.basePrice = pointA.basePrice;
-}
+const sortByPrice = (pointA, pointB) => pointB.basePrice = pointA.basePrice;
 
 export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice };
 

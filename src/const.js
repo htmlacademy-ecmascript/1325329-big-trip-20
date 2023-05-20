@@ -25,6 +25,6 @@ const SortType = {
   DAY: 'day',
   TIME: 'time',
   PRICE: 'price',
-}
+};
 
 export { TYPES, DATA_FORMAT, FilterType, Mode, SortType };
