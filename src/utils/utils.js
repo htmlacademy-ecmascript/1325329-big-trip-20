@@ -48,21 +48,27 @@ function isPointPast(point) {
   return dayjs().isAfter(point.dateTo);
 }
 
-const sortByDay = (pointA, pointB) => {
+function sortByDay(pointA, pointB) {
   if (dayjs(pointA.dateFrom).isAfter(dayjs(pointB.dateFrom))) {
     return 1;
   }
-  if (dayjs(pointA.dateFrom) === (dayjs(pointB.dateFrom))) {
+
+  if (dayjs(pointA.dateFrom) === dayjs(pointB.dateFrom)) {
     return 0;
   }
+
   if (dayjs(pointA.dateFrom).isBefore(dayjs(pointB.dateFrom))) {
     return -1;
   }
-};
+}
 
-const sortByTime = (pointA, pointB) => dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom)) - dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+function sortByTime(pointA, pointB) {
+  return dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom)) - dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+}
 
-const sortByPrice = (pointA, pointB) => pointB.basePrice = pointA.basePrice;
+function sortByPrice(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
 
 export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice };
 
