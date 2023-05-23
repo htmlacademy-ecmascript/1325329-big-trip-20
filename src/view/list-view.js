@@ -5,6 +5,10 @@ function createListTemplate() {
 }
 
 export default class ListView extends AbstractView {
+  constructor() {
+    super();
+  }
+
   get template() {
     return createListTemplate();
   }

@@ -48,5 +48,27 @@ function isPointPast(point) {
   return dayjs().isAfter(point.dateTo);
 }
 
-export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast };
+function sortByDay(pointA, pointB) {
+  if (dayjs(pointA.dateFrom).isAfter(dayjs(pointB.dateFrom))) {
+    return 1;
+  }
+
+  if (dayjs(pointA.dateFrom) === dayjs(pointB.dateFrom)) {
+    return 0;
+  }
+
+  if (dayjs(pointA.dateFrom).isBefore(dayjs(pointB.dateFrom))) {
+    return -1;
+  }
+}
+
+function sortByTime(pointA, pointB) {
+  return dayjs(pointB.dateTo).diff(dayjs(pointB.dateFrom)) - dayjs(pointA.dateTo).diff(dayjs(pointA.dateFrom));
+}
+
+function sortByPrice(pointA, pointB) {
+  return pointB.basePrice - pointA.basePrice;
+}
+
+export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice };
 
