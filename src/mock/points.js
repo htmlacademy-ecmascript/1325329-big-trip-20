@@ -45,7 +45,7 @@ export const points = [
   },
   {
     'id': nanoid(),
-    'basePrice': 2100,
+    'basePrice': 4120,
     'dateFrom': '2020-07-12T12:50:00.845Z',
     'dateTo': '2020-07-12T14:20:50.375Z',
     'destination': 2,
@@ -55,7 +55,7 @@ export const points = [
   },
   {
     'id': nanoid(),
-    'basePrice': 2100,
+    'basePrice': 2510,
     'dateFrom': '2020-07-12T12:50:00.845Z',
     'dateTo': '2020-07-12T14:20:50.375Z',
     'destination': 2,
@@ -65,7 +65,7 @@ export const points = [
   },
   {
     'id': nanoid(),
-    'basePrice': 2100,
+    'basePrice': 2500,
     'dateFrom': '2020-07-12T12:50:00.845Z',
     'dateTo': '2020-07-12T14:20:50.375Z',
     'destination': 2,
@@ -75,7 +75,7 @@ export const points = [
   },
   {
     'id': nanoid(),
-    'basePrice': 2100,
+    'basePrice': 2500,
     'dateFrom': '2020-07-12T12:50:00.845Z',
     'dateTo': '2020-07-12T14:20:50.375Z',
     'destination': 2,

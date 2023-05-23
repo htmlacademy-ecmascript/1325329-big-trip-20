@@ -30,15 +30,11 @@ export default class ContentPresenter {
   }
 
   init() {
-    const points = [...this.#pointsModel.getPoints()];
-    const destinations = [...this.#pointsModel.getDestinations()];
-    const offers = [...this.#pointsModel.getOffers()];
+    this.#points = [...this.#pointsModel.getPoints()];
+    this.#destinations = [...this.#pointsModel.getDestinations()];
+    this.#offers = [...this.#pointsModel.getOffers()];
 
     this.#renderTrip();
-
-    for (let i = 0; i < points.length; i++) {
-      this.#renderPoint({point: points[i], destinations, offers});
-    }
   }
 
   #handleModeChange = () => {
@@ -97,7 +93,7 @@ export default class ContentPresenter {
   #renderPoints = () => {
     this.#points.forEach((point) => this.#renderPoint({
       point,
-      destinations: this.#destinations.find((dstntn) => dstntn.id === point.destination),
+      destinations: this.#destinations,
       offers: this.#offers
     }));
   };
