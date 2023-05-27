@@ -1,7 +1,12 @@
 import { DATA_FORMAT } from '../const.js';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(utc);
 dayjs.extend(duration);
+dayjs.extend(customParseFormat);
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
@@ -15,6 +20,8 @@ const humanizeTravelDate = (dateFrom) => dateFrom ? dayjs(dateFrom).format(DATA_
 const humanizeTimeFromTo = (dateTo) => dateTo ? dayjs(dateTo).format(DATA_FORMAT.dataStartEndTime) : '';
 
 const humanizeTimeEdit = (dateTime) => dateTime ? dayjs(dateTime).format(DATA_FORMAT.dataStartEndDate) : '';
+
+const parseDateFromEditFormat = (dateString) => dayjs.utc(dateString, DATA_FORMAT.dataStartEndDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
 
 // const humanizeTravelTime = (dateFrom, dateTo) => dayjs.duration(dayjs(dateTo).diff(dateFrom)).format(DATA_FORMAT.dataDurationDay);
 
@@ -70,5 +77,5 @@ function sortByPrice(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
-export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice };
+export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, parseDateFromEditFormat };
 
