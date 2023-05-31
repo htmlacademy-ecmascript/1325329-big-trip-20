@@ -1,7 +1,5 @@
 const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-const CITIES = ['Chamonix', 'London', 'Amsterdam'];
-
 const DATA_FORMAT = {
   dataDate: 'MMM DD',
   dataStartEndTime: 'HH:mm',
@@ -29,4 +27,4 @@ const SortType = {
   PRICE: 'price',
 };
 
-export { TYPES, CITIES, DATA_FORMAT, FilterType, Mode, SortType };
+export { TYPES, DATA_FORMAT, FilterType, Mode, SortType };
