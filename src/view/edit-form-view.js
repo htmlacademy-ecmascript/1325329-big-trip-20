@@ -1,7 +1,8 @@
-import flatpickr from 'flatpickr';
-import 'flatpickr/dist/flatpickr.min.css';
 import { humanizeTimeEdit, parseDateFromEditFormat } from '../utils/utils.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
+import flatpickr from 'flatpickr';
+import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/themes/material_blue.css';
 
 function createNewPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, type } = point;
@@ -10,7 +11,7 @@ function createNewPointTemplate(point, destinations, offers) {
   const { pictures } = pointDestination;
   const dateStart = humanizeTimeEdit(dateFrom);
   const dateEnd = humanizeTimeEdit(dateTo);
-  const createImageList = (arr) => arr.map((item) => `<img class="event__photo" src="${item.src}" alt="${item.description}">`).join('');
+  const createImageList = (arr) => arr.map((image) => `<img class="event__photo" src="${image.src}" alt="${image.description}">`).join('');
   const createPicturesList = createImageList(pictures);
 
   const createOffersTemplate = () => {
@@ -221,16 +222,9 @@ export default class EditPointView extends AbstractStatefulView {
     });
   };
 
-  //   const name = document.querySelector('.event__input--price'); // Получаем input
-  // let regex = /[0-9]/g; // регулярка только цифры
-
-  // name.oninput = function () {
-  //   this.value = this.value.replace(regex, '');
-  // }
-
   #dateChangeHandler = (evt) => {
     evt.preventDefault();
-    if (evt.target.name === 'event-start-time') {
+    if (evt.target.name === 'event-start--time') {
       this._setState({
         dateFrom: parseDateFromEditFormat(evt.target.value),
       });

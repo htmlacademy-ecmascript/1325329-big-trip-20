@@ -77,6 +77,7 @@ export default class PointPresenter {
   }
 
   #replaceEditToPoint = () => {
+    this.#pointEditComponent.reset(this.#point);
     replace(this.#pointComponent, this.#pointEditComponent);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.DEFAULT;
@@ -113,7 +114,7 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = (point) => {
-    this.#handleDataChange(point);
     this.#replaceEditToPoint();
+    this.#handleDataChange(point);
   };
 }
