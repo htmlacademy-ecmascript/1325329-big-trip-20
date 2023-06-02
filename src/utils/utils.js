@@ -1,6 +1,9 @@
 import { DATA_FORMAT } from '../const.js';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
+
+dayjs.extend(utc);
 dayjs.extend(duration);
 
 const MSEC_IN_SEC = 1000;
@@ -15,8 +18,6 @@ const humanizeTravelDate = (dateFrom) => dateFrom ? dayjs(dateFrom).format(DATA_
 const humanizeTimeFromTo = (dateTo) => dateTo ? dayjs(dateTo).format(DATA_FORMAT.dataStartEndTime) : '';
 
 const humanizeTimeEdit = (dateTime) => dateTime ? dayjs(dateTime).format(DATA_FORMAT.dataStartEndDate) : '';
-
-// const humanizeTravelTime = (dateFrom, dateTo) => dayjs.duration(dayjs(dateTo).diff(dateFrom)).format(DATA_FORMAT.dataDurationDay);
 
 const humanizeTravelTime = (dateFrom, dateTo) => {
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));

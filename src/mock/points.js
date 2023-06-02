@@ -36,8 +36,8 @@ export const points = [
   {
     'id': nanoid(),
     'basePrice': 2100,
-    'dateFrom': '2020-07-12T12:50:00.845Z',
-    'dateTo': '2020-07-12T14:20:50.375Z',
+    'dateFrom': '2022-07-12T12:50:00.845Z',
+    'dateTo': '2022-07-12T14:20:50.375Z',
     'destination': 2,
     'isFavorite': true,
     'offers': [1, 2],
@@ -46,9 +46,9 @@ export const points = [
   {
     'id': nanoid(),
     'basePrice': 4120,
-    'dateFrom': '2020-07-12T12:50:00.845Z',
-    'dateTo': '2020-07-12T14:20:50.375Z',
-    'destination': 2,
+    'dateFrom': '2021-07-12T12:50:00.845Z',
+    'dateTo': '2021-07-12T14:20:50.375Z',
+    'destination': 1,
     'isFavorite': true,
     'offers': [1, 2],
     'type': getRandomArrayElement(TYPES)
@@ -56,9 +56,9 @@ export const points = [
   {
     'id': nanoid(),
     'basePrice': 2510,
-    'dateFrom': '2020-07-12T12:50:00.845Z',
-    'dateTo': '2020-07-12T14:20:50.375Z',
-    'destination': 2,
+    'dateFrom': '2023-07-12T12:50:00.845Z',
+    'dateTo': '2023-07-12T14:20:50.375Z',
+    'destination': 3,
     'isFavorite': true,
     'offers': [1, 2],
     'type': getRandomArrayElement(TYPES)
@@ -68,7 +68,7 @@ export const points = [
     'basePrice': 2500,
     'dateFrom': '2020-07-12T12:50:00.845Z',
     'dateTo': '2020-07-12T14:20:50.375Z',
-    'destination': 2,
+    'destination': 1,
     'isFavorite': true,
     'offers': [1, 2],
     'type': getRandomArrayElement(TYPES)
@@ -76,17 +76,11 @@ export const points = [
   {
     'id': nanoid(),
     'basePrice': 2500,
-    'dateFrom': '2020-07-12T12:50:00.845Z',
-    'dateTo': '2020-07-12T14:20:50.375Z',
+    'dateFrom': '2021-07-12T12:50:00.845Z',
+    'dateTo': '2021-07-12T14:20:50.375Z',
     'destination': 2,
     'isFavorite': true,
-    'offers': [1,2],
+    'offers': [1, 2],
     'type': getRandomArrayElement(TYPES)
   },
 ];
-
-function getRandomPoint() {
-  return getRandomArrayElement(points);
-}
-
-export { getRandomPoint };

@@ -44,7 +44,8 @@ export default class PointPresenter {
       destinations: this.#destinations,
       offers: this.#offers,
       onFormSubmit: this.#handleFormSubmit,
-      onRollupButtonClick: this.#handleRollupButtonClick,
+      onRollButtonClick: this.#handleRollupButtonClick,
+      onCancelClick: this.#handleCancelClick,
     });
 
     if (prevPointComponent === null || prevEditPointComponent === null) {
@@ -76,6 +77,7 @@ export default class PointPresenter {
   }
 
   #replaceEditToPoint = () => {
+    this.#pointEditComponent.reset(this.#point);
     replace(this.#pointComponent, this.#pointEditComponent);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.DEFAULT;
@@ -95,6 +97,10 @@ export default class PointPresenter {
     }
   };
 
+  #handleCancelClick = () => {
+    this.resetView();
+  };
+
   #handleEditClick = () => {
     this.#replacePointToEdit();
   };
@@ -108,7 +114,7 @@ export default class PointPresenter {
   };
 
   #handleFormSubmit = (point) => {
-    this.#handleDataChange(point);
     this.#replaceEditToPoint();
+    this.#handleDataChange(point);
   };
 }
