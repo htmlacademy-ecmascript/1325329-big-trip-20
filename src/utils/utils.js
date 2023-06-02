@@ -21,10 +21,6 @@ const humanizeTimeFromTo = (dateTo) => dateTo ? dayjs(dateTo).format(DATA_FORMAT
 
 const humanizeTimeEdit = (dateTime) => dateTime ? dayjs(dateTime).format(DATA_FORMAT.dataStartEndDate) : '';
 
-const parseDateFromEditFormat = (dateString) => dayjs.utc(dateString, DATA_FORMAT.dataStartEndDate).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]');
-
-// const humanizeTravelTime = (dateFrom, dateTo) => dayjs.duration(dayjs(dateTo).diff(dateFrom)).format(DATA_FORMAT.dataDurationDay);
-
 const humanizeTravelTime = (dateFrom, dateTo) => {
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
   let pointDuration = 0;
@@ -77,5 +73,5 @@ function sortByPrice(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
-export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, parseDateFromEditFormat };
+export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice };
 
