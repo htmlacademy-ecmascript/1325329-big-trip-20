@@ -80,7 +80,7 @@ export const points = [
     'dateTo': '2021-07-12T14:20:50.375Z',
     'destination': 2,
     'isFavorite': true,
-    'offers': [1, 2],
+    'offers': [1],
     'type': getRandomArrayElement(TYPES)
   },
 ];
