@@ -1,4 +1,4 @@
-import { humanizeTimeEdit, parseDateFromEditFormat } from '../utils/utils.js';
+import { humanizeTimeEdit } from '../utils/utils.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
@@ -218,19 +218,6 @@ export default class EditPointView extends AbstractStatefulView {
       basePrice: evt.target.value,
     });
   };
-
-  // #dateChangeHandler = (evt) => {
-  //   evt.preventDefault();
-  //   if (evt.target.name === 'event-start--time') {
-  //     this._setState({
-  //       dateFrom: parseDateFromEditFormat(evt.target.value),
-  //     });
-  //   } else {
-  //     this._setState({
-  //       dateTo: parseDateFromEditFormat(evt.target.value),
-  //     });
-  //   }
-  // };
 
   #setDatepicker() {
     const [dateFrom, dateTo] = this.element.querySelectorAll('.event__input--time');

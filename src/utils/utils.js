@@ -2,11 +2,9 @@ import { DATA_FORMAT } from '../const.js';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(utc);
 dayjs.extend(duration);
-dayjs.extend(customParseFormat);
 
 const MSEC_IN_SEC = 1000;
 const SEC_IN_MIN = 60;
