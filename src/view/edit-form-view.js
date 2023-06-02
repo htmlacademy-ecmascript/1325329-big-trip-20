@@ -18,8 +18,8 @@ function createNewPointTemplate(point, destinations, offers) {
     const isChecked = (offer) => point.offers.includes(offer.id) ? 'checked' : '';
     return typeOffers.map((offer) =>
       `<div class="event__offer-selector">
-         <input class="event__offer-checkbox  visually-hidden" id="event-${offer.title}-${offer.id}" type="checkbox" name="${offer.title}}" ${isChecked(offer)}>
-         <label class="event__offer-label" for="event-${offer.title}-${offer.id}">
+         <input class="event__offer-checkbox  visually-hidden" id="event-${offer.id}-${point.id}" type="checkbox" name="${offer.title}}" ${isChecked(offer)}>
+         <label class="event__offer-label" for="event-${offer.id}-${point.id}">
           <span class="event__offer-title">${offer.title}</span>
           &plus;&euro;&nbsp;
           <span class="event__offer-price">${offer.price}</span>
@@ -168,9 +168,6 @@ export default class EditPointView extends AbstractStatefulView {
     this.element.querySelector('.event__available-offers')
       .addEventListener('change', this.#offerChangeHandler);
 
-    this.element.querySelectorAll('.event__input--time')
-      .forEach((date) => date.addEventListener('change', this.#dateChangeHandler));
-
     this.#setDatepicker();
   };
 
@@ -201,7 +198,7 @@ export default class EditPointView extends AbstractStatefulView {
     evt.preventDefault();
     const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox:checked'));
     this._setState({
-      offers: checkedBoxes.map((element) => element.id)
+      offers: checkedBoxes.map((element) => Number(element.id.split('-')[1]))
     });
   };
 
@@ -222,18 +219,18 @@ export default class EditPointView extends AbstractStatefulView {
     });
   };
 
-  #dateChangeHandler = (evt) => {
-    evt.preventDefault();
-    if (evt.target.name === 'event-start--time') {
-      this._setState({
-        dateFrom: parseDateFromEditFormat(evt.target.value),
-      });
-    } else {
-      this._setState({
-        dateTo: parseDateFromEditFormat(evt.target.value),
-      });
-    }
-  };
+  // #dateChangeHandler = (evt) => {
+  //   evt.preventDefault();
+  //   if (evt.target.name === 'event-start--time') {
+  //     this._setState({
+  //       dateFrom: parseDateFromEditFormat(evt.target.value),
+  //     });
+  //   } else {
+  //     this._setState({
+  //       dateTo: parseDateFromEditFormat(evt.target.value),
+  //     });
+  //   }
+  // };
 
   #setDatepicker() {
     const [dateFrom, dateTo] = this.element.querySelectorAll('.event__input--time');
@@ -268,13 +265,13 @@ export default class EditPointView extends AbstractStatefulView {
   }
 
   #dateFromChangeHandler = ([userDate]) => {
-    this.updateElement({
+    this._setState({
       dateFrom: userDate
     });
   };
 
   #dateToChangeHandler = ([userDate]) => {
-    this.updateElement({
+    this._setState({
       dateTo: userDate
     });
   };

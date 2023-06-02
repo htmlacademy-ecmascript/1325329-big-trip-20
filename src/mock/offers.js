@@ -113,18 +113,7 @@ export const offers = [
   },
   {
     type: 'sightseeing',
-    offers: [
-      {
-        id: 1,
-        title: 'Add breakfast',
-        price: getRandomValue(300)
-      },
-      {
-        id: 2,
-        title: 'Switch to comfort',
-        price: getRandomValue(300)
-      },
-    ]
+    offers: []
   },
   {
     type: 'restaurant',
