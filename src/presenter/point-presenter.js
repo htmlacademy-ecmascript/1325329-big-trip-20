@@ -1,7 +1,8 @@
 import { remove, render, replace } from '../framework/render.js';
 import PointView from '../view/point-view.js';
 import EditFormView from '../view/edit-form-view.js';
-import { Mode } from '../const.js';
+import { Mode, UserAction, UpdateType } from '../const.js';
+
 
 export default class PointPresenter {
   #pointListContainer = null;
@@ -46,6 +47,7 @@ export default class PointPresenter {
       onFormSubmit: this.#handleFormSubmit,
       onRollButtonClick: this.#handleRollupButtonClick,
       onCancelClick: this.#handleCancelClick,
+      onDeleteClick: this.#handleDeleteClick,
     });
 
     if (prevPointComponent === null || prevEditPointComponent === null) {
@@ -72,6 +74,7 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode !== Mode.DEFAULT) {
+      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   }
@@ -93,6 +96,7 @@ export default class PointPresenter {
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
+      this.#pointEditComponent.reset(this.#point);
       this.#replaceEditToPoint();
     }
   };
@@ -101,20 +105,37 @@ export default class PointPresenter {
     this.resetView();
   };
 
+  #handleDeleteClick = (point) => {
+    this.#handleDataChange(
+      UserAction.DELETE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
+  };
+
   #handleEditClick = () => {
     this.#replacePointToEdit();
   };
 
   #handleRollupButtonClick = () => {
+    this.#pointEditComponent.reset(this.#point);
     this.#replaceEditToPoint();
   };
 
   #handleFavoriteClick = () => {
-    this.#handleDataChange({ ...this.#point, isFavorite: !this.#point.isFavorite });
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      { ...this.#point, isFavorite: !this.#point.isFavorite }
+    );
   };
 
   #handleFormSubmit = (point) => {
     this.#replaceEditToPoint();
-    this.#handleDataChange(point);
+    this.#handleDataChange(
+      UserAction.UPDATE_POINT,
+      UpdateType.MINOR,
+      point,
+    );
   };
 }

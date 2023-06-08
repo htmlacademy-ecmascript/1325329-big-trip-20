@@ -5,10 +5,6 @@ function createTripTemplate() {
 }
 
 export default class TripView extends AbstractView {
-  constructor() {
-    super();
-  }
-
   get template() {
     return createTripTemplate();
   }

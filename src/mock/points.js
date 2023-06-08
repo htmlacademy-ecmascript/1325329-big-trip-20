@@ -84,3 +84,12 @@ export const points = [
     'type': getRandomArrayElement(TYPES)
   },
 ];
+
+function getRandomPoint() {
+  return {
+    id: nanoid(),
+    ...getRandomArrayElement(points)
+  };
+}
+
+export { getRandomPoint };
