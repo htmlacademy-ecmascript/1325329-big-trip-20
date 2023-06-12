@@ -4,6 +4,16 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
+const DEFAULT_POINT = {
+  basePrice: null,
+  dateFrom: '',
+  dateTo: '',
+  destination: 1,
+  isFavorite: false,
+  offers: [],
+  type: 'taxi'
+};
+
 function createNewPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, type } = point;
   const pointDestination = destinations.find((dest) => point.destination === dest.id);
@@ -116,7 +126,7 @@ export default class EditPointView extends AbstractStatefulView {
   #handleCancelClick = null;
   #handleDeleteClick = null;
 
-  constructor({ point, destinations, offers, onFormSubmit, onRollButtonClick, onCancelClick, onDeleteClick }) {
+  constructor({ point = DEFAULT_POINT, destinations, offers, onFormSubmit, onRollButtonClick, onCancelClick, onDeleteClick }) {
     super();
     this._setState(EditPointView.parsePointToState(point));
 

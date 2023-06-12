@@ -1,4 +1,4 @@
-import { render, RenderPosition } from '../framework/render.js';
+import { remove, render, RenderPosition } from '../framework/render.js';
 import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
 import { sortByDay, sortByTime, sortByPrice } from '../utils/utils.js';
 import { filter } from '../utils/filter.js';
@@ -42,7 +42,7 @@ export default class ContentPresenter {
     });
 
     this.#pointsModel.addObserver(this.#handleModelPoint);
-    // this.#filterModel.addObserver(this.#handleModelPoint);
+    this.#filterModel.addObserver(this.#handleModelPoint);
   }
 
   get points() {
@@ -85,8 +85,8 @@ export default class ContentPresenter {
   }
 
   #handleModeChange = () => {
-    this.#pointPresenters.forEach((presenter) => presenter.resetView());
     this.#newPointPresenter.destroy();
+    this.#pointPresenters.forEach((presenter) => presenter.resetView());
   };
 
   #handleViewAction = (actionType, updateType, update) => {
@@ -118,21 +118,6 @@ export default class ContentPresenter {
         break;
     }
   };
-
-  // #sortPoints(sortType) {
-  //   switch (sortType) {
-  //     case SortType.DAY:
-  //       this.#points.sort(sortByDay);
-  //       break;
-  //     case SortType.TIME:
-  //       this.#points.sort(sortByTime);
-  //       break;
-  //     case SortType.PRICE:
-  //       this.#points.sort(sortByPrice);
-  //       break;
-  //   }
-  //   this.#currentSortType = sortType;
-  // }
 
   #hadleSortTypeChange = (sortType) => {
     if (this.#currentSortType === sortType) {
@@ -188,11 +173,11 @@ export default class ContentPresenter {
     this.#pointPresenters.forEach((presenter) => presenter.destroy());
     this.#pointPresenters.clear();
 
-    // remove(this.#sortComponent);
+    remove(this.#sortComponent);
 
-    // if (this.#noPointComponent) {
-    //   remove(this.#noPointComponent);
-    // }
+    if (this.#noPointComponent) {
+      remove(this.#noPointComponent);
+    }
 
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
@@ -211,7 +196,7 @@ export default class ContentPresenter {
   #renderTrip() {
     render(this.#tripComponent, this.#listContainer);
 
-    if (this.points.lenght === 0) {
+    if (this.points.length === 0) {
       this.#renderNoPoints();
       return;
     }
