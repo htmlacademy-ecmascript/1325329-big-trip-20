@@ -1,5 +1,3 @@
-const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
-
 const DATA_FORMAT = {
   dataDate: 'MMM DD',
   dataStartEndTime: 'HH:mm',
@@ -37,6 +35,7 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
 };
 
-export { TYPES, DATA_FORMAT, FilterType, Mode, SortType, UserAction, UpdateType };
+export { DATA_FORMAT, FilterType, Mode, SortType, UserAction, UpdateType };

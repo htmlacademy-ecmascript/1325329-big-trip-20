@@ -6,6 +6,8 @@ import ListView from '../view/list-view.js';
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
 import NoPointView from '../view/no-point-view.js';
+import LoadingView from '../view/loading-view.js';
+import ErrorView from '../view/error-view.js';
 import PointPresenter from './point-presenter.js';
 import NewPointPresenter from './new-point-presenter.js';
 
@@ -16,6 +18,7 @@ export default class ContentPresenter {
 
   #tripComponent = new TripView();
   #listComponent = new ListView();
+  #loadingComponent = new LoadingView();
   #sortComponent = null;
   #noPointComponent = null;
 
@@ -27,6 +30,7 @@ export default class ContentPresenter {
   #newPointPresenter = null;
   #currentSortType = SortType.DAY;
   #filterType = FilterType.EVERYTHING;
+  #isLoading = true;
 
   constructor({ listContainer, pointsModel, filterModel, onNewPointDestroy }) {
     this.#listContainer = listContainer;
@@ -116,6 +120,16 @@ export default class ContentPresenter {
         this.#clearPoints({ resetSortType: true });
         this.#renderTrip();
         break;
+      case UpdateType.INIT:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderTrip();
+        break;
+      case UpdateType.ERROR:
+        this.#isLoading = false;
+        remove(this.#loadingComponent);
+        this.#renderError('Can\'t reach server. Please, try again.');
+        break;
     }
   };
 
@@ -157,6 +171,15 @@ export default class ContentPresenter {
     }));
   };
 
+  #renderLoading() {
+    render(this.#loadingComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
+  }
+
+  #renderError(error) {
+    const errorComponent = new ErrorView({ message: error });
+    render(errorComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
+  }
+
   #renderNoPoints = () => {
     const points = this.#pointsModel.points;
     const isEmpty = (points.length === 0);
@@ -174,6 +197,7 @@ export default class ContentPresenter {
     this.#pointPresenters.clear();
 
     remove(this.#sortComponent);
+    remove(this.#loadingComponent);
 
     if (this.#noPointComponent) {
       remove(this.#noPointComponent);
@@ -195,6 +219,11 @@ export default class ContentPresenter {
 
   #renderTrip() {
     render(this.#tripComponent, this.#listContainer);
+
+    if (this.#isLoading) {
+      this.#renderLoading();
+      return;
+    }
 
     if (this.points.length === 0) {
       this.#renderNoPoints();

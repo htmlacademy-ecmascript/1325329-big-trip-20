@@ -37,17 +37,11 @@ const humanizeTravelTime = (dateFrom, dateTo) => {
   return pointDuration;
 };
 
-function isPointFuture(point) {
-  return dayjs().isBefore(point.dateFrom);
-}
+const isPointPast = (dateFrom, dateTo) => (dayjs().isAfter(dayjs(dateFrom)) && dayjs().isAfter(dayjs(dateTo)));
 
-function isPointPresent(point) {
-  return (dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo));
-}
+const isPointPresent = (dateFrom, dateTo) => (dayjs().isAfter(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo)));
 
-function isPointPast(point) {
-  return dayjs().isAfter(point.dateTo);
-}
+const isPointFuture = (dateFrom, dateTo) => (dayjs().isBefore(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo)));
 
 function sortByDay(pointA, pointB) {
   if (dayjs(pointA.dateFrom).isAfter(dayjs(pointB.dateFrom))) {
