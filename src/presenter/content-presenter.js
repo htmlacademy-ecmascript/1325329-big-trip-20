@@ -34,7 +34,7 @@ export default class ContentPresenter {
     this.#filterModel = filterModel;
 
     this.#newPointPresenter = new NewPointPresenter({
-      pointssListContainer: this.#listComponent.element,
+      pointsListContainer: this.#listComponent.element,
       onDataChange: this.#handleViewAction,
       onDestroy: onNewPointDestroy,
       destinations: this.destinations,
