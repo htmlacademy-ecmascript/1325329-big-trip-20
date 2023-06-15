@@ -4,6 +4,16 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
+const DEFAULT_POINT = {
+  basePrice: null,
+  dateFrom: '',
+  dateTo: '',
+  destination: 1,
+  isFavorite: false,
+  offers: [],
+  type: 'taxi'
+};
+
 function createNewPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, type } = point;
   const pointDestination = destinations.find((dest) => point.destination === dest.id);
@@ -78,7 +88,7 @@ function createNewPointTemplate(point, destinations, offers) {
         <input class="event__input  event__input--price" id="event-price-${point.id}" type="text" name="event-price" value="${basePrice}">
       </div>
       <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-      <button class="event__reset-btn" type="reset">Cancel</button>
+      <button class="event__reset-btn" type="reset">Delete</button>
       <button class="event__rollup-btn" type="button">
       <span class="visually-hidden">Open event</span>
       </button>
@@ -114,8 +124,9 @@ export default class EditPointView extends AbstractStatefulView {
   #handleFormSubmit = null;
   #handleRollupButtonClick = null;
   #handleCancelClick = null;
+  #handleDeleteClick = null;
 
-  constructor({ point, destinations, offers, onFormSubmit, onRollButtonClick, onCancelClick }) {
+  constructor({ point = DEFAULT_POINT, destinations, offers, onFormSubmit, onRollButtonClick, onCancelClick, onDeleteClick }) {
     super();
     this._setState(EditPointView.parsePointToState(point));
 
@@ -124,6 +135,7 @@ export default class EditPointView extends AbstractStatefulView {
     this.#handleFormSubmit = onFormSubmit;
     this.#handleRollupButtonClick = onRollButtonClick;
     this.#handleCancelClick = onCancelClick;
+    this.#handleDeleteClick = onDeleteClick;
 
     this._restoreHandlers();
   }
@@ -150,11 +162,20 @@ export default class EditPointView extends AbstractStatefulView {
     this.element.querySelector('form')
       .addEventListener('submit', this.#formSubmitHandler);
 
-    this.element.querySelector('.event__rollup-btn')
-      .addEventListener('click', this.#rollupButtonClickHandler);
+    const rollupButton = this.element.querySelector('.event__rollup-btn');
+    if (rollupButton) {
+      rollupButton.addEventListener('click', this.#rollupButtonClickHandler);
+    }
 
-    this.element.querySelector('.event__reset-btn')
-      .addEventListener('click', this.#cancelClickHandler);
+    const resetButton = this.element.querySelector('.event__reset-btn');
+    switch (false) {
+      case true:
+        resetButton.addEventListener('click', this.#cancelClickHandler);
+        break;
+      case false:
+        resetButton.addEventListener('click', this.#deleteClickHandler);
+        break;
+    }
 
     this.element.querySelector('.event__type-group')
       .addEventListener('change', this.#typeChangeHandler);
@@ -176,14 +197,19 @@ export default class EditPointView extends AbstractStatefulView {
     this.#handleFormSubmit(EditPointView.parseStateToPoint(this._state));
   };
 
+  #rollupButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this.#handleRollupButtonClick();
+  };
+
   #cancelClickHandler = (evt) => {
     evt.preventDefault();
     this.#handleCancelClick();
   };
 
-  #rollupButtonClickHandler = (evt) => {
+  #deleteClickHandler = (evt) => {
     evt.preventDefault();
-    this.#handleRollupButtonClick();
+    this.#handleDeleteClick(EditPointView.parseStateToPoint(this._state));
   };
 
   #typeChangeHandler = (evt) => {
