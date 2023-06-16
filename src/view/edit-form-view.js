@@ -5,7 +5,7 @@ import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
 const DEFAULT_POINT = {
-  basePrice: null,
+  basePrice: '',
   dateFrom: '',
   dateTo: '',
   destination: 1,
@@ -18,11 +18,8 @@ function createNewPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, type } = point;
   const pointDestination = destinations.find((dest) => point.destination === dest.id);
   const typeOffers = offers.find((offer) => offer.type === type).offers;
-  const { pictures } = pointDestination;
   const dateStart = humanizeTimeEdit(dateFrom);
   const dateEnd = humanizeTimeEdit(dateTo);
-  const createImageList = (arr) => arr.map((image) => `<img class="event__photo" src="${image.src}" alt="${image.description}">`).join('');
-  const createPicturesList = createImageList(pictures);
 
   const createOffersTemplate = () => {
     const isChecked = (offer) => point.offers.includes(offer.id) ? 'checked' : '';
@@ -68,7 +65,7 @@ function createNewPointTemplate(point, destinations, offers) {
         <label class="event__label  event__type-output" for="event-destination-${point.id}">
         ${type}
         </label>
-        <input class="event__input  event__input--destination" id="event-destination-${point.id}" type="text" name="event-destination" value="${pointDestination.name}" list="destination-list-${point.id}">
+        <input class="event__input  event__input--destination" id="event-destination-${point.id}" type="text" name="event-destination" value="${pointDestination ? pointDestination.name : ''}" list="destination-list-${point.id}">
         <datalist id="destination-list-${point.id}">
          ${createDestinationsOption};
         </datalist>
@@ -100,15 +97,18 @@ function createNewPointTemplate(point, destinations, offers) {
         ${createOffersTemplate()}
         </div>
       </section>
-      <section class="event__section  event__section--destination">
-        <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-        <p class="event__destination-description">${pointDestination.description}</p>
-        <div class="event__photos-container">
-          <div class="event__photos-tape">
-          ${createPicturesList}
+      ${pointDestination ? (
+      `<section class="event__section  event__section--destination">
+          <h3 class="event__section-title  event__section-title--destination">Destination</h3>
+          <p class="event__destination-description">${pointDestination.description}</p>
+          <div class="event__photos-container">
+            <div class="event__photos-tape">
+            ${pointDestination.pictures.map((image) => `<img class="event__photo" src="${image.src}" alt="${image.description}">`).join('')}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>`
+    ) : ''}
+
     </section>
   </form>
 </li>

@@ -13,11 +13,11 @@ const HOUR_IN_DAY = 24;
 const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
-const humanizeTravelDate = (dateFrom) => dateFrom ? dayjs(dateFrom).format(DATA_FORMAT.dataDate) : '';
+const humanizeTravelDate = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataDate) : '';
 
-const humanizeTimeFromTo = (dateTo) => dateTo ? dayjs(dateTo).format(DATA_FORMAT.dataStartEndTime) : '';
+const humanizeTimeFromTo = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndTime) : '';
 
-const humanizeTimeEdit = (dateTime) => dateTime ? dayjs(dateTime).format(DATA_FORMAT.dataStartEndDate) : '';
+const humanizeTimeEdit = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndDate) : '';
 
 const humanizeTravelTime = (dateFrom, dateTo) => {
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
@@ -37,17 +37,11 @@ const humanizeTravelTime = (dateFrom, dateTo) => {
   return pointDuration;
 };
 
-function isPointFuture(point) {
-  return dayjs().isBefore(point.dateFrom);
-}
+const isPointPast = (dateFrom, dateTo) => (dayjs().isAfter(dayjs(dateFrom)) && dayjs().isAfter(dayjs(dateTo)));
 
-function isPointPresent(point) {
-  return (dayjs().isAfter(point.dateFrom) && dayjs().isBefore(point.dateTo));
-}
+const isPointPresent = (dateFrom, dateTo) => (dayjs().isAfter(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo)));
 
-function isPointPast(point) {
-  return dayjs().isAfter(point.dateTo);
-}
+const isPointFuture = (dateFrom, dateTo) => (dayjs().isBefore(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo)));
 
 function sortByDay(pointA, pointB) {
   if (dayjs(pointA.dateFrom).isAfter(dayjs(pointB.dateFrom))) {
