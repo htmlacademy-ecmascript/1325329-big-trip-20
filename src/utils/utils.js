@@ -66,10 +66,6 @@ function sortByPrice(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
-function capitalizeLetter(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -91,5 +87,5 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, capitalizeLetter, showAlert };
+export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, showAlert };
 

@@ -26,8 +26,8 @@ function createNewPointTemplate(point, destinations, offers) {
     const isChecked = (offer) => point.offers.includes(offer.id) ? 'checked' : '';
     return typeOffers.map((offer) =>
       `<div class="event__offer-selector">
-         <input class="event__offer-checkbox  visually-hidden" id="event-${offer.id}-${point.id}" type="checkbox" name="${offer.title}}" ${isChecked(offer)}>
-         <label class="event__offer-label" for="event-${offer.id}-${point.id}">
+         <input class="event__offer-checkbox  visually-hidden" id="event_${offer.id}_${point.id}" type="checkbox" name="${offer.title}}" ${isChecked(offer)}>
+         <label class="event__offer-label" for="event_${offer.id}_${point.id}">
           <span class="event__offer-title">${offer.title}</span>
           &plus;&euro;&nbsp;
           <span class="event__offer-price">${offer.price}</span>
@@ -86,7 +86,7 @@ function createNewPointTemplate(point, destinations, offers) {
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
+        <input class="event__input  event__input--price" id="event-price-${point.id}" type="text" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
       </div>
       <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
       ${templateButtons}
@@ -225,7 +225,7 @@ export default class EditPointView extends AbstractStatefulView {
     evt.preventDefault();
     const checkedBoxes = Array.from(this.element.querySelectorAll('.event__offer-checkbox:checked'));
     this._setState({
-      offers: checkedBoxes.map((element) => Number(element.id.split('-')[1]))
+      offers: checkedBoxes.map((element) => element.id.split('_')[1])
     });
   };
 
@@ -256,7 +256,6 @@ export default class EditPointView extends AbstractStatefulView {
         onChange: this.#dateFromChangeHandler,
         enableTime: true,
         maxDate: this._state.dateTo,
-        allowInput: true,
         'time_24hr': true,
         locale: {
           firstDayOfWeek: 1
@@ -271,7 +270,6 @@ export default class EditPointView extends AbstractStatefulView {
         onChange: this.#dateToChangeHandler,
         enableTime: true,
         minDate: this._state.dateFrom,
-        allowInput: true,
         'time_24hr': true,
         locale: {
           firstDayOfWeek: 1
