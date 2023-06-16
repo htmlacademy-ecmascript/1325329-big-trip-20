@@ -10,20 +10,17 @@ export default class NewPointPresenter {
 
   #pointEditComponent = null;
 
-  #destinations = null;
-  #offers = null;
+  // #destinations = null;
+  // #offers = null;
 
-  constructor({ pointsListContainer, onDataChange, onDestroy, onModeChange, destinations, offers }) {
+  constructor({ pointsListContainer, onDataChange, onDestroy, onModeChange }) {
     this.#pointsListContainer = pointsListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleModeChange = onModeChange;
     this.#handleDestroy = onDestroy;
-
-    this.#destinations = destinations;
-    this.#offers = offers;
   }
 
-  init() {
+  init({ offers, destinations }) {
     if (this.#pointEditComponent !== null) {
       return;
     }
@@ -31,8 +28,8 @@ export default class NewPointPresenter {
     this.#pointEditComponent = new EditPointView({
       onFormSubmit: this.#handleFormSubmit,
       onDeleteClick: this.#handleDeleteClick,
-      destinations: this.#destinations,
-      offers: this.#offers,
+      destinations,
+      offers,
     });
 
     render(this.#pointEditComponent, this.#pointsListContainer, RenderPosition.AFTERBEGIN);
@@ -89,7 +86,6 @@ export default class NewPointPresenter {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       this.destroy();
-      this.#handleModeChange();
     }
   };
 }

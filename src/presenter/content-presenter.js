@@ -21,10 +21,11 @@ export default class ContentPresenter {
   #loadingComponent = new LoadingView();
   #sortComponent = null;
   #noPointComponent = null;
+  #isNewPointFormOpened = false;
 
-  #points = [];
-  #destinations = [];
-  #offers = [];
+  // #points = [];
+  // #destinations = [];
+  // #offers = [];
 
   #pointPresenters = new Map();
   #newPointPresenter = null;
@@ -75,17 +76,14 @@ export default class ContentPresenter {
   }
 
   init() {
-    this.#points = [...this.#pointsModel.points];
-    this.#destinations = [...this.#pointsModel.destinations];
-    this.#offers = [...this.#pointsModel.offers];
-
     this.#renderTrip();
   }
 
   createPoint() {
+    this.#isNewPointFormOpened = true;
     this.#currentSortType = SortType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newPointPresenter.init();
+    this.#newPointPresenter.init({destinations: this.destinations, offers: this.offers});
   }
 
   #handleModeChange = () => {
@@ -123,7 +121,7 @@ export default class ContentPresenter {
       case UpdateType.INIT:
         this.#isLoading = false;
         remove(this.#loadingComponent);
-        this.#renderTrip();
+        this.init();
         break;
       case UpdateType.ERROR:
         this.#isLoading = false;
@@ -225,11 +223,12 @@ export default class ContentPresenter {
       return;
     }
 
-    if (this.points.length === 0) {
+    if (this.points.length === 0 && !this.#isNewPointFormOpened) {
       this.#renderNoPoints();
       return;
     }
 
+    remove(this.#noPointComponent);
     this.#renderSort();
     this.#renderPointsList();
   }
