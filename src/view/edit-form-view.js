@@ -1,6 +1,7 @@
 import { humanizeTimeEdit } from '../utils/utils.js';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import flatpickr from 'flatpickr';
+import he from 'he';
 import 'flatpickr/dist/flatpickr.min.css';
 import 'flatpickr/dist/themes/material_blue.css';
 
@@ -8,14 +9,14 @@ const DEFAULT_POINT = {
   basePrice: '',
   dateFrom: '',
   dateTo: '',
-  destination: 1,
+  destination: '',
   isFavorite: false,
   offers: [],
   type: 'taxi'
 };
 
 function createNewPointTemplate(point, destinations, offers) {
-  const { basePrice, dateTo, dateFrom, type } = point;
+  const { basePrice, dateTo, dateFrom, type, isDisabled, isSaving, isDeleting } = point;
   const pointDestination = destinations.find((dest) => point.destination === dest.id);
   const typeOffers = offers.find((offer) => offer.type === type).offers;
   const dateStart = humanizeTimeEdit(dateFrom);
@@ -44,6 +45,11 @@ function createNewPointTemplate(point, destinations, offers) {
 
   const createDestinationsOption = destinations.map((element) => `<option value="${element.name}"></option>`).join('');
 
+  const isNewPoint = !point.id;
+  const templateButtons = isNewPoint
+    ? `<button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>Cancel</button>`
+    : `<button class="event__reset-btn" type="reset" ${isDisabled ? 'disabled' : ''}>${isDeleting ? 'Deleting...' : 'Delete'}</button> \n <button class="event__rollup-btn" type="button">`;
+
   return (`
   <li class="trip-events__item">
    <form class="event event--edit" action="#" method="post">
@@ -53,7 +59,7 @@ function createNewPointTemplate(point, destinations, offers) {
           <span class="visually-hidden">Choose event type</span>
           <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event type icon">
         </label>
-        <input class="event__type-toggle  visually-hidden" id="event-type-toggle-${point.id}" type="checkbox">
+        <input class="event__type-toggle  visually-hidden" id="event-type-toggle-${point.id}" type="checkbox" ${isDisabled ? 'disabled' : ''}>
         <div class="event__type-list">
           <fieldset class="event__type-group">
             <legend class="visually-hidden">Event type</legend>
@@ -62,42 +68,37 @@ function createNewPointTemplate(point, destinations, offers) {
         </div>
       </div>
       <div class="event__field-group  event__field-group--destination">
-        <label class="event__label  event__type-output" for="event-destination-${point.id}">
-        ${type}
-        </label>
-        <input class="event__input  event__input--destination" id="event-destination-${point.id}" type="text" name="event-destination" value="${pointDestination ? pointDestination.name : ''}" list="destination-list-${point.id}">
+        <label class="event__label  event__type-output" for="event-destination-${point.id}">${type}</label>
+        <input class="event__input  event__input--destination" id="event-destination-${point.id}" type="text" name="event-destination" value="${pointDestination ? he.encode(pointDestination.name) : ''}" list="destination-list-${point.id}" autocomplete="off" ${isDisabled ? 'disabled' : ''} required>
         <datalist id="destination-list-${point.id}">
          ${createDestinationsOption};
         </datalist>
       </div>
       <div class="event__field-group  event__field-group--time">
         <label class="visually-hidden" for="event-start-time-${point.id}">From</label>
-        <input class="event__input  event__input--time" id="event-start-time-${point.id}" type="text" name="event-start-time" value="${dateStart}">
+        <input class="event__input  event__input--time" id="event-start-time-${point.id}" type="text" name="event-start-time" value="${dateStart}" ${isDisabled ? 'disabled' : ''} required>
         &mdash;
         <label class="visually-hidden" for="event-end-time-${point.id}">To</label>
-        <input class="event__input  event__input--time" id="event-end-time-${point.id}" type="text" name="event-end-time" value="${dateEnd}">
+        <input class="event__input  event__input--time" id="event-end-time-${point.id}" type="text" name="event-end-time" value="${dateEnd}" ${isDisabled ? 'disabled' : ''} required>
       </div>
       <div class="event__field-group  event__field-group--price">
         <label class="event__label" for="event-price-${point.id}">
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${point.id}" type="text" name="event-price" value="${basePrice}">
+        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
       </div>
-      <button class="event__save-btn  btn  btn--blue" type="submit">Save</button>
-      <button class="event__reset-btn" type="reset">Delete</button>
-      <button class="event__rollup-btn" type="button">
-      <span class="visually-hidden">Open event</span>
-      </button>
-    </header>
-    <section class="event__details">
-      <section class="event__section  event__section--offers">
-        <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-        <div class="event__available-offers">
+      <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
+      ${templateButtons}
+         </header>
+  <section class="event__details">
+    <section class="event__section  event__section--offers">
+      <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+      <div class="event__available-offers">
         ${createOffersTemplate()}
-        </div>
-      </section>
-      ${pointDestination ? (
+      </div>
+    </section>
+    ${pointDestination ? (
       `<section class="event__section  event__section--destination">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
           <p class="event__destination-description">${pointDestination.description}</p>
@@ -109,10 +110,10 @@ function createNewPointTemplate(point, destinations, offers) {
         </section>`
     ) : ''}
 
-    </section>
-  </form>
-</li>
-`);
+  </section>
+  </form >
+</li >
+  `);
 }
 
 export default class EditPointView extends AbstractStatefulView {
@@ -255,6 +256,7 @@ export default class EditPointView extends AbstractStatefulView {
         onChange: this.#dateFromChangeHandler,
         enableTime: true,
         maxDate: this._state.dateTo,
+        allowInput: true,
         'time_24hr': true,
         locale: {
           firstDayOfWeek: 1
@@ -269,6 +271,7 @@ export default class EditPointView extends AbstractStatefulView {
         onChange: this.#dateToChangeHandler,
         enableTime: true,
         minDate: this._state.dateFrom,
+        allowInput: true,
         'time_24hr': true,
         locale: {
           firstDayOfWeek: 1
@@ -290,10 +293,21 @@ export default class EditPointView extends AbstractStatefulView {
   };
 
   static parsePointToState(point) {
-    return { ...point };
+    return {
+      ...point,
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+    };
   }
 
   static parseStateToPoint(state) {
-    return { ...state };
+    const point = { ...state };
+
+    delete point.isDisabled;
+    delete point.isSaving;
+    delete point.isDeleting;
+
+    return point;
   }
 }

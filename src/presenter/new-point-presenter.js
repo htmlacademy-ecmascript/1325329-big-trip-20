@@ -10,9 +10,6 @@ export default class NewPointPresenter {
 
   #pointEditComponent = null;
 
-  // #destinations = null;
-  // #offers = null;
-
   constructor({ pointsListContainer, onDataChange, onDestroy, onModeChange }) {
     this.#pointsListContainer = pointsListContainer;
     this.#handleDataChange = onDataChange;
@@ -79,7 +76,6 @@ export default class NewPointPresenter {
 
   #handleDeleteClick = () => {
     this.destroy();
-    this.#handleModeChange();
   };
 
   #escKeyDownHandler = (evt) => {
