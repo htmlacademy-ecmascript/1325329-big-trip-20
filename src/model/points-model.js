@@ -1,5 +1,6 @@
 import Observable from '../framework/observable.js';
 import { UpdateType } from '../const.js';
+import { showAlert } from '../utils/utils.js';
 
 export default class PointsModel extends Observable {
   #pointsApiService = null;
@@ -58,7 +59,7 @@ export default class PointsModel extends Observable {
       ];
       this._notify(updateType, updatedPoint);
     } catch (err) {
-      // showAlert('Failed to update event: can\'t reach server. Please try again.');
+      showAlert('Failed to update event: server is not available. Please try again later.');
       throw new Error('Can\'t update event');
     }
   }
@@ -70,7 +71,7 @@ export default class PointsModel extends Observable {
       this.#points = [newPoint, ...this.#points];
       this._notify(updateType, update);
     } catch (err) {
-      // showAlert('Failed to add event: can\'t reach server. Please try again.');
+      showAlert('Failed to add event: server is not available. Please try again later.');
       throw new Error('Can\'t add event');
     }
   }
@@ -90,7 +91,7 @@ export default class PointsModel extends Observable {
       ];
       this._notify(updateType);
     } catch (err) {
-      // showAlert('Failed to delete event: can\'t reach server. Please try again.');
+      showAlert('Failed to delete event: server is not available. Please try again later.');
       throw new Error('Can\'t delete event');
     }
   }
