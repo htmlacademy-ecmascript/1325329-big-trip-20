@@ -3,6 +3,7 @@ import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 import { SortType, UpdateType, UserAction, FilterType } from '../const.js';
 import { sortByDay, sortByTime, sortByPrice } from '../utils/utils.js';
 import { filter } from '../utils/filter.js';
+import { handleNewPointFormClose } from '../main.js';
 import ListView from '../view/list-view.js';
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
@@ -151,6 +152,7 @@ export default class ContentPresenter {
         this.#renderTrip();
         break;
       case UpdateType.INIT:
+        handleNewPointFormClose();
         this.#isLoading = false;
         remove(this.#loadingComponent);
         this.#renderTrip();
