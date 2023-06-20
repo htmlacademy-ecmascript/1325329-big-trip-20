@@ -19,6 +19,7 @@ function createNewPointTemplate(point, destinations, offers) {
   const { basePrice, dateTo, dateFrom, type, isDisabled, isSaving, isDeleting } = point;
   const pointDestination = destinations.find((dest) => point.destination === dest.id);
   const typeOffers = offers.find((offer) => offer.type === type).offers;
+  const isOffersEmpty = (typeOffers.length === 0);
   const dateStart = humanizeTimeEdit(dateFrom);
   const dateEnd = humanizeTimeEdit(dateTo);
 
@@ -86,13 +87,13 @@ function createNewPointTemplate(point, destinations, offers) {
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
+        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" min="1" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
       </div>
       <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
       ${templateButtons}
          </header>
   <section class="event__details">
-    <section class="event__section  event__section--offers">
+    <section class="event__section  event__section--offers ${isOffersEmpty ? 'visually-hidden' : ''}"">
       <h3 class="event__section-title  event__section-title--offers">Offers</h3>
       <div class="event__available-offers">
         ${createOffersTemplate()}
@@ -279,13 +280,13 @@ export default class EditPointView extends AbstractStatefulView {
   }
 
   #dateFromChangeHandler = ([userDate]) => {
-    this._setState({
+    this.updateElement({
       dateFrom: userDate
     });
   };
 
   #dateToChangeHandler = ([userDate]) => {
-    this._setState({
+    this.updateElement({
       dateTo: userDate
     });
   };

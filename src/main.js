@@ -1,5 +1,4 @@
 import { render } from './framework/render.js';
-import InfoPresenter from './presenter/info-presenter.js';
 import ContentPresenter from './presenter/content-presenter.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import PointsModel from './model/points-model.js';
@@ -8,7 +7,7 @@ import NewPointButtonView from './view/new-point-button-view.js';
 import PointsApiService from './points-api-service.js';
 
 const AUTHORIZATION = 'Basic hA2sfda124wcl1sa2j';
-const END_POINT = 'https://20.objects.pages.academy/big-trip';
+const END_POINT = 'https://20.ecmascript.pages.academy/big-trip';
 
 const tripInfoElement = document.querySelector('.trip-main');
 const tripListFilterElement = document.querySelector('.trip-controls__filters');
@@ -19,11 +18,6 @@ const pointsModel = new PointsModel({
 });
 
 const filterModel = new FilterModel();
-
-const infoPresenter = new InfoPresenter({
-  infoContainer: tripInfoElement,
-  pointsModel: pointsModel,
-});
 
 const contentPresenter = new ContentPresenter({
   listContainer: tripListElement,
@@ -53,7 +47,6 @@ function handleNewPointButtonClick() {
 
 render(newPointButtonComponent, tripInfoElement);
 
-infoPresenter.init();
 filterPresenter.init();
 contentPresenter.init();
 pointsModel.init();
