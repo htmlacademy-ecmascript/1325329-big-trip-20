@@ -1,5 +1,4 @@
 import { render } from './framework/render.js';
-import InfoPresenter from './presenter/info-presenter.js';
 import ContentPresenter from './presenter/content-presenter.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import PointsModel from './model/points-model.js';
@@ -19,11 +18,6 @@ const pointsModel = new PointsModel({
 });
 
 const filterModel = new FilterModel();
-
-const infoPresenter = new InfoPresenter({
-  infoContainer: tripInfoElement,
-  pointsModel: pointsModel,
-});
 
 const contentPresenter = new ContentPresenter({
   listContainer: tripListElement,
@@ -53,7 +47,6 @@ function handleNewPointButtonClick() {
 
 render(newPointButtonComponent, tripInfoElement);
 
-infoPresenter.init();
 filterPresenter.init();
 contentPresenter.init();
 pointsModel.init();

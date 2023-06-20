@@ -15,6 +15,7 @@ const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
 const humanizeTravelDate = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataDate) : '';
+const humanizeDateForSameEvent = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataSameDate) : '';
 const humanizeTimeFromTo = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndTime) : '';
 const humanizeTimeEdit = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndDate) : '';
 const humanizeTravelTime = (dateFrom, dateTo) => {
@@ -62,6 +63,13 @@ function sortByPrice(pointA, pointB) {
   return pointB.basePrice - pointA.basePrice;
 }
 
+const findTripConcreteOffers = (pointType, offers) => offers.find((offer) => offer.type === pointType).offers;
+
+const mapIdToOffers = (offers, ids, pointType) => {
+  const concreteOffers = findTripConcreteOffers(pointType, offers);
+  return ids.map((offerId) => concreteOffers.find((offer) => offer.id === offerId));
+};
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -83,5 +91,7 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export { humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, showAlert };
 
+export {
+  humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, showAlert, humanizeDateForSameEvent, mapIdToOffers
+};

@@ -7,6 +7,7 @@ import { handleNewPointFormClose } from '../main.js';
 import ListView from '../view/list-view.js';
 import TripView from '../view/trip-view.js';
 import SortView from '../view/sort-view.js';
+import InfoView from '../view/info-view.js';
 import NoPointView from '../view/no-point-view.js';
 import LoadingView from '../view/loading-view.js';
 import ErrorView from '../view/error-view.js';
@@ -27,6 +28,8 @@ export default class ContentPresenter {
   #listComponent = new ListView();
   #loadingComponent = new LoadingView();
   #sortComponent = null;
+  #infoComponent = null;
+  #mainComponent = document.querySelector('.trip-main');
   #noPointComponent = null;
   #isNewPointFormOpened = false;
 
@@ -183,6 +186,15 @@ export default class ContentPresenter {
     render(this.#sortComponent, this.#tripComponent.element, RenderPosition.AFTERBEGIN);
   }
 
+  #renderInfo() {
+    const points = this.#pointsModel.points.sort(sortByDay);
+    const destinations = this.destinations;
+    const offers = this.offers;
+    this.#infoComponent = new InfoView({points, destinations, offers});
+
+    render(this.#infoComponent, this.#mainComponent, RenderPosition.AFTERBEGIN);
+  }
+
   #renderPoint = ({ point, destinations, offers }) => {
     const pointPresenter = new PointPresenter({
       pointsListContainer: this.#listComponent.element,
@@ -262,7 +274,12 @@ export default class ContentPresenter {
       return;
     }
 
+    if (this.#infoComponent) {
+      remove(this.#infoComponent);
+    }
+
     remove(this.#noPointComponent);
+    this.#renderInfo();
     this.#renderSort();
     this.#renderPointsList();
   }

@@ -1,5 +1,6 @@
 const DATA_FORMAT = {
   dataDate: 'MMM DD',
+  dataSameDate: 'DD',
   dataStartEndTime: 'HH:mm',
   dataStartEndDate: 'DD/MM/YY HH:MM',
   dataDurationDay: 'DD[D ] HH[H ] mm[M]',
