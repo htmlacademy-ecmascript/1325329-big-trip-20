@@ -8,7 +8,7 @@ import NewPointButtonView from './view/new-point-button-view.js';
 import PointsApiService from './points-api-service.js';
 
 const AUTHORIZATION = 'Basic hA2sfda124wcl1sa2j';
-const END_POINT = 'https://20.objects.pages.academy/big-trip';
+const END_POINT = 'https://20.ecmascript.pages.academy/big-trip';
 
 const tripInfoElement = document.querySelector('.trip-main');
 const tripListFilterElement = document.querySelector('.trip-controls__filters');

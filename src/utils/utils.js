@@ -15,15 +15,11 @@ const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
 const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
 
 const humanizeTravelDate = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataDate) : '';
-
 const humanizeTimeFromTo = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndTime) : '';
-
 const humanizeTimeEdit = (date) => date ? dayjs(date).utc().format(DATA_FORMAT.dataStartEndDate) : '';
-
 const humanizeTravelTime = (dateFrom, dateTo) => {
   const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
   let pointDuration = 0;
-
   switch (true) {
     case (timeDiff >= MSEC_IN_DAY):
       pointDuration = dayjs.duration(timeDiff).format(DATA_FORMAT.dataDurationDay);

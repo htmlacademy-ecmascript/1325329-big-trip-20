@@ -48,10 +48,6 @@ export default class SortView extends AbstractView {
       return;
     }
 
-    if (evt.target.dataset.sortType === 'event' || evt.target.dataset.sortType === 'offer') {
-      evt.preventDefault();
-    }
-
     this.#handleSortTypeChange(evt.target.dataset.sortType);
   };
 }
