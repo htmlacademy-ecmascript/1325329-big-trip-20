@@ -87,7 +87,7 @@ function createNewPointTemplate(point, destinations, offers) {
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" min="1" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
+        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" min="1" name="event-price" value="${he.encode(`${basePrice}`)}" ${isDisabled ? 'disabled' : ''} required >
       </div>
       <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
       ${templateButtons}
