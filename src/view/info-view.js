@@ -70,11 +70,10 @@ const createTripInfoCostTemplate = (points, offers) => {
 };
 
 const createInfoTemplate = (points, destinations, offers) =>
-  /*HTML*/ `
-    <section class="trip-main__trip-info  trip-info">
-      ${createTripInfoMainTemplate(points, destinations)}
-      ${createTripInfoCostTemplate(points, offers)}
-    </section>`;
+  `<section class="trip-main__trip-info  trip-info">
+     ${createTripInfoMainTemplate(points, destinations)}
+     ${createTripInfoCostTemplate(points, offers)}
+   </section>`;
 
 
 export default class InfoView extends AbstractView {
