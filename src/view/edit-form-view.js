@@ -30,9 +30,9 @@ function createNewPointTemplate(point, destinations, offers) {
       `<div class="event__offer-selector">
          <input class="event__offer-checkbox  visually-hidden" id="event_${offer.id}_${point.id}" type="checkbox" name="${offer.title}}" ${isChecked(offer)}>
          <label class="event__offer-label" for="event_${offer.id}_${point.id}">
-          <span class="event__offer-title">${he.encode(`${offer.title}`)}</span>
+          <span class="event__offer-title">${he.encode(offer.title)}</span>
           &plus;&euro;&nbsp;
-          <span class="event__offer-price">${he.encode(`${offer.price}`)}</span>
+          <span class="event__offer-price">${he.encode(String(offer.price))}</span>
         </label>
         </input>
       </div>`).join('');
@@ -41,7 +41,7 @@ function createNewPointTemplate(point, destinations, offers) {
   const createTypesList = () => offers.map((offer) =>
     `<div class="event__type-${offer.type}">
           <input id="event-type-${offer.type}-${point.id}" class="event__type-input  visually-hidden" type="radio" name="event-type" value="${offer.type}" ${offer.type === type ? 'checked' : ''} ">
-          <label class="event__type-label event__type-label--${offer.type}" for="event-type-${offer.type}-${point.id}">${he.encode(`${capitalizeFirstLetter(offer.type)}`)}</label>
+          <label class="event__type-label event__type-label--${offer.type}" for="event-type-${offer.type}-${point.id}">${he.encode(capitalizeFirstLetter(offer.type))}</label>
         </div>
        `).join('');
 
@@ -88,7 +88,7 @@ function createNewPointTemplate(point, destinations, offers) {
           <span class="visually-hidden">Price</span>
           &euro;
         </label>
-        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" min="1" name="event-price" value="${he.encode(`${basePrice}`)}" ${isDisabled ? 'disabled' : ''} required >
+        <input class="event__input  event__input--price" id="event-price-${point.id}" type="number" min="1" name="event-price" value="${basePrice}" ${isDisabled ? 'disabled' : ''} required >
       </div>
       <button class="event__save-btn  btn  btn--blue" type="submit" ${isDisabled ? 'disabled' : ''}>${isSaving ? 'Saving...' : 'Save'}</button>
       ${templateButtons}
@@ -103,7 +103,7 @@ function createNewPointTemplate(point, destinations, offers) {
     ${pointDestination ? (
       `<section class="event__section  event__section--destination ${isDestinationEmpty ? 'visually-hidden' : ''}">
           <h3 class="event__section-title  event__section-title--destination">Destination</h3>
-          <p class="event__destination-description">${he.encode(`${pointDestination.description}`)}</p>
+          <p class="event__destination-description">${he.encode(pointDestination.description)}</p>
           <div class="event__photos-container">
             <div class="event__photos-tape">
             ${pointDestination.pictures.map((image) => `<img class="event__photo" src="${image.src}" alt="${image.description}">`).join('')}
@@ -244,7 +244,7 @@ export default class EditPointView extends AbstractStatefulView {
   #priceChangeHandler = (evt) => {
     evt.preventDefault();
     this._setState({
-      basePrice: evt.target.value,
+      basePrice: Number(evt.target.value),
     });
   };
 
