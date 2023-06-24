@@ -70,6 +70,8 @@ const mapIdToOffers = (offers, ids, pointType) => {
   return ids.map((offerId) => concreteOffers.find((offer) => offer.id === offerId));
 };
 
+const capitalizeFirstLetter = (word) => word.charAt(0).toUpperCase() + word.slice(1);
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = '100';
@@ -93,5 +95,5 @@ const showAlert = (message) => {
 
 
 export {
-  humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, showAlert, humanizeDateForSameEvent, mapIdToOffers
+  humanizeTravelDate, humanizeTimeFromTo, humanizeTravelTime, humanizeTimeEdit, capitalizeFirstLetter, isPointFuture, isPointPresent, isPointPast, sortByDay, sortByTime, sortByPrice, showAlert, humanizeDateForSameEvent, mapIdToOffers
 };

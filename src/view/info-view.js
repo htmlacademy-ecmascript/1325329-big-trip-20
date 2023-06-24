@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { humanizeTravelDate, humanizeDateForSameEvent, mapIdToOffers } from '../utils/utils.js';
+import he from 'he';
 
 const createTripInfoMainTemplate = (points, destinations) => {
   const firstDestination = destinations.find((dstntn) => dstntn.id === points[0].destination).name;
@@ -33,7 +34,7 @@ const createTripInfoMainTemplate = (points, destinations) => {
     lastDate = humanizeTravelDate(points[points.length - 1].dateTo);
   }
   return `<div class="trip-info__main">
-            <h1 class="trip-info__title">${firstDestination} ${getMiddleDestination()} ${lastDestination}</h1>
+            <h1 class="trip-info__title">${he.encode(firstDestination)} ${getMiddleDestination()} ${he.encode(lastDestination)}</h1>
 
             <p class="trip-info__dates">${firstDate}&nbsp;&mdash;&nbsp;${lastDate}</p>
           </div>`;
@@ -70,11 +71,10 @@ const createTripInfoCostTemplate = (points, offers) => {
 };
 
 const createInfoTemplate = (points, destinations, offers) =>
-  /*HTML*/ `
-    <section class="trip-main__trip-info  trip-info">
-      ${createTripInfoMainTemplate(points, destinations)}
-      ${createTripInfoCostTemplate(points, offers)}
-    </section>`;
+  `<section class="trip-main__trip-info  trip-info">
+     ${createTripInfoMainTemplate(points, destinations)}
+     ${createTripInfoCostTemplate(points, offers)}
+   </section>`;
 
 
 export default class InfoView extends AbstractView {
